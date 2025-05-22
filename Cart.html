@@ -3,316 +3,602 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trendy Tees - Shopping Cart</title>
+  <title>TeesHub - Shopping Cart</title>
+  <meta name="description" content="Review your shopping cart and proceed to checkout at TeesHub. Manage your selected t-shirts, sizes, and quantities before finalizing your order." />
+  <meta name="keywords" content="shopping cart, checkout, TeesHub, order, t-shirts, review order" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-teeshub-domain.com/cart.html">
+  <meta property="og:title" content="TeesHub - Shopping Cart">
+  <meta property="og:description" content="Review your shopping cart and proceed to checkout at TeesHub.">
+  <meta property="og:image" content="https://your-teeshub-domain.com/images/og-cart.jpg"> <meta property="og:site_name" content="TeesHub">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://your-teeshub-domain.com/cart.html">
+  <meta property="twitter:title" content="TeesHub - Shopping Cart">
+  <meta property="twitter:description" content="Review your shopping cart and proceed to checkout at TeesHub.">
+  <meta property="twitter:image" content="https://your-teeshub-domain.com/images/og-cart.jpg">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    :root {
+      /* Light theme (grey-green) */
+      --primary-bg: #f5f5f5;
+      --secondary-bg: #e0e0e0;
+      --primary-text: #333;
+      --secondary-text: #555;
+      --accent-color: #4CAF50;
+      --header-bg: #ffffff;
+      --footer-bg: #333;
+      --footer-text: #f0f0f0;
+      --button-bg: #4CAF50;
+      --button-text: #ffffff;
+      --border-color: #ddd;
+      --input-bg: #ffffff;
+      --input-border: #ccc;
+    }
+
+    body.dark-theme {
+      /* Dark theme (black-blue) */
+      --primary-bg: #1a1a1a;
+      --secondary-bg: #333333;
+      --primary-text: #f0f0f0;
+      --secondary-text: #cccccc;
+      --accent-color: #2196F3;
+      --header-bg: #222222;
+      --footer-bg: #111;
+      --footer-text: #cccccc;
+      --button-bg: #2196F3;
+      --button-text: #ffffff;
+      --border-color: #444;
+      --input-bg: #2a2a2a;
+      --input-border: #555;
+    }
 
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f9fafb;
-      color: #1f2937;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      padding: 0;
+      background-color: var(--primary-bg);
+      color: var(--primary-text);
+      transition: background-color 0.3s, color 0.3s;
     }
 
     header {
-      background-color: #1f2937;
-      color: white;
-      padding: 1rem 2rem;
+      background-color: var(--header-bg);
+      color: var(--primary-text);
+      padding: 1em 2em;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
     }
+
     .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.1em;
-      user-select: none;
       display: flex;
       align-items: center;
-    }
-    .logo svg {
-      width: 32px;
-      height: 32px;
-      margin-right: 0.5rem;
-      fill: #3b82f6;
-    }
-    nav {
-      display: flex;
-      gap: 1.5rem;
-      font-weight: 600;
-    }
-    nav a {
-      padding: 0.5rem 0.75rem;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-      color: white;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: var(--primary-text);
       text-decoration: none;
     }
-    nav a:hover {
-      background-color: #2563eb;
-    }
-    nav a.active {
-      background-color: #2563eb;
-      cursor: default;
+
+    .logo svg {
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+      fill: var(--accent-color);
+      transition: fill 0.3s;
     }
 
-    main {
-      flex-grow: 1;
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: var(--primary-text);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent-color);
+    }
+
+    .container {
       max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 2rem;
+      margin: 2em auto;
+      padding: 0 20px;
     }
 
-    h1 {
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
+    .cart-header {
       text-align: center;
+      margin-bottom: 2em;
     }
 
-    .cart-empty {
-      text-align: center;
-      font-size: 1.25rem;
-      color: #6b7280;
-      margin-top: 3rem;
+    .cart-header h1 {
+      font-size: 2.5em;
+      color: var(--primary-text);
     }
 
-    .cart-table {
+    #cart-items-container {
+      background-color: var(--secondary-bg);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+    }
+
+    #cart-items-container table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 2rem;
+      margin-bottom: 20px;
     }
-    .cart-table th, .cart-table td {
-      border-bottom: 1px solid #e5e7eb;
-      padding: 0.75rem 1rem;
+
+    #cart-items-container th,
+    #cart-items-container td {
       text-align: left;
-      vertical-align: middle;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--primary-text);
+      transition: border-color 0.3s, color 0.3s;
     }
-    .cart-table th {
-      color: #374151;
-      font-weight: 600;
-      background-color: #f3f4f6;
-    }
-    .cart-table td img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-    .cart-table td .product-name {
-      font-weight: 600;
-      color: #111827;
-    }
-    .cart-table td .product-size {
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-    .cart-table td .remove-button {
-      background-color: #ef4444;
-      border: none;
+
+    #cart-items-container th {
+      background-color: var(--accent-color);
       color: white;
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.25s ease;
+      font-weight: bold;
     }
-    .cart-table td .remove-button:hover {
-      background-color: #b91c1c;
+
+    #cart-items-container .remove-item-button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: background-color 0.3s;
+    }
+
+    #cart-items-container .remove-item-button:hover {
+      background-color: #d32f2f;
     }
 
     .cart-total {
-      font-weight: 700;
-      font-size: 1.5rem;
       text-align: right;
-      margin-bottom: 2rem;
-      color: #111827;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-top: 20px;
     }
 
     .checkout-button {
       display: block;
-      width: 100%;
-      max-width: 320px;
-      margin: 0 auto 3rem;
-      background-color: #3b82f6;
+      width: fit-content;
+      margin: 30px auto 0 auto;
+      background-color: var(--accent-color);
       color: white;
-      font-weight: 700;
-      padding: 1rem 0;
-      text-align: center;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.125rem;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2em;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
+      border: none;
+      transition: background-color 0.3s;
     }
-    .checkout-button:hover, .checkout-button:focus {
-      background-color: #2563eb;
-      outline: none;
+
+    .checkout-button:hover {
+      background-color: var(--button-bg);
+    }
+
+    .empty-cart-message {
+      text-align: center;
+      padding: 50px;
+      color: var(--secondary-text);
+      font-size: 1.1em;
     }
 
     footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 2em;
       text-align: center;
-      padding: 1.5rem 1rem;
-      background-color: #1f2937;
+      margin-top: 4em;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    footer p {
+      margin: 0.5em 0;
+    }
+
+    footer nav ul {
+      justify-content: center;
+      margin-bottom: 1em;
+    }
+
+    footer nav ul li a {
+      color: var(--footer-text);
+    }
+
+    .cookie-consent-banner {
+      display: none; /* Hidden by default */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--secondary-bg);
+      color: var(--primary-text);
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      border-top: 1px solid var(--border-color);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .cookie-consent-banner p {
+      margin: 0 0 10px 0;
+      font-size: 0.9em;
+    }
+
+    .cookie-consent-banner button {
+      background-color: var(--accent-color);
       color: white;
-      user-select: none;
-      margin-top: auto;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
     }
-    footer a {
-      color: #60a5fa;
+
+    .cookie-consent-banner button:hover {
+      background-color: var(--button-bg);
+    }
+
+    .cookie-consent-banner a {
+      color: var(--accent-color);
       text-decoration: none;
-      margin: 0 8px;
-      font-weight: 600;
+      margin-left: 5px;
     }
-    footer a:hover {
+
+    .cookie-consent-banner a:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 600px) {
-      .cart-table td img {
-        width: 50px;
-        height: 50px;
+    .theme-toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-left: 20px;
+    }
+
+    .theme-toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-color);
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px var(--accent-color);
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
       }
-      .cart-total {
-        font-size: 1.25rem;
+
+      nav ul {
+        margin-top: 1em;
+        flex-direction: column;
+        align-items: center;
       }
-      .checkout-button {
-        max-width: 100%;
+
+      nav ul li {
+        margin: 10px 0;
+      }
+
+      .cart-header h1 {
+        font-size: 2em;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <a href="/index.html" class="logo" aria-label="Go to homepage">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18"/>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 21V9"/>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.47L18.42 7.74L12 11L5.58 7.74L12 4.47ZM4 9L11 12.5V20L4 16.5V9ZM13 20V12.5L20 9V16.5L13 20Z" />
       </svg>
-      TrendyTees
+      TeesHub
     </a>
-    <nav aria-label="Primary navigation">
-      <a href="/index.html">Home</a>
-      <a href="/shop.html">Products</a>
-      <a href="/cart.html" class="active" aria-current="page">Cart</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="Shop.html">Shop</a></li>
+        <li><a href="Cart.html">Cart (<span class="cart-count">0</span>)</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
+    <label class="theme-toggle-switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider"></span>
+    </label>
   </header>
 
   <main>
-    <h1>Your Shopping Cart</h1>
-    <div id="cart-container">
-      <!-- Cart content injected by JS -->
-    </div>
-    <button class="checkout-button" aria-label="Proceed to checkout" disabled>Checkout</button>
+    <section class="container">
+      <div class="cart-header">
+        <h1>Your Shopping Cart</h1>
+      </div>
+
+      <div id="cart-items-container">
+        <p class="empty-cart-message">Your cart is empty. Start shopping now!</p>
+      </div>
+
+      <button id="checkoutButton" class="checkout-button">Proceed to Checkout</button>
+    </section>
   </main>
 
   <footer>
-    <a href="/about.html">About</a> |
-    <a href="/contact.html">Contact</a> |
-    <a href="/terms.html">Terms</a>
-    <p>&copy; 2024 TrendyTees. All rights reserved.</p>
+    <p>&copy; <span id="currentYear"></span> TeesHub. All rights reserved.</p>
+    <nav>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Sitemap</a></li>
+      </ul>
+    </nav>
   </footer>
 
+  <div id="cookieConsentBanner" class="cookie-consent-banner">
+    <p>This website uses cookies to ensure you get the best experience on our website. By clicking "Accept", you agree to our use of cookies. <a href="#privacy-policy">Learn more</a></p>
+    <button id="acceptCookieConsent">Accept</button>
+  </div>
+
   <script>
-    // Example dummy data for cart items
-    // In practice, this data would come from localStorage or a backend
-    const productsData = {
-      tshirt1: { name: "Classic White Tee", price: 19.99, image: "https://images.unsplash.com/photo-1520975860686-788e73816aad?auto=format&fit=crop&w=400&q=80" },
-      tshirt2: { name: "Graphic Logo Tee", price: 24.99, image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" },
-      tshirt3: { name: "Vintage Band Tee", price: 29.99, image: "https://images.unsplash.com/photo-1530845647475-f53efe370073?auto=format&fit=crop&w=400&q=80" }
-    };
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Cart stored as { productId__size: quantity }
-    // For demo purposes initialize with some dummy items
-    let cart = {
-      "tshirt1__M": 2,
-      "tshirt2__L": 1
-    };
+    const checkoutButton = document.getElementById('checkoutButton');
+    const cartContainer = document.getElementById('cart-items-container');
 
-    const cartContainer = document.getElementById('cart-container');
-    const checkoutButton = document.querySelector('.checkout-button');
+    // Function to retrieve cart data from local storage
+    function getCart() {
+      // The cart is now stored with a key 'cart' and items include size
+      const cartData = localStorage.getItem('cart');
+      return cartData ? JSON.parse(cartData) : {};
+    }
 
+    // Function to save cart data to local storage
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateHeaderCartCount(); // Update cart count in header after saving
+    }
+
+    // Function to render cart items on the page
     function renderCart() {
-      cartContainer.innerHTML = '';
-      const keys = Object.keys(cart);
-      if (keys.length === 0) {
-        cartContainer.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
-        checkoutButton.disabled = true;
+      const cart = getCart();
+      cartContainer.innerHTML = ''; // Clear previous content
+
+      // If cart is empty, display message and hide checkout button
+      if (Object.keys(cart).length === 0) {
+        cartContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty. Start shopping now!</p>';
+        checkoutButton.style.display = 'none';
+        updateHeaderCartCount();
         return;
       }
-      checkoutButton.disabled = false;
+
+      checkoutButton.style.display = 'block'; // Show checkout button if cart has items
 
       const table = document.createElement('table');
-      table.className = 'cart-table';
       table.innerHTML = `
         <thead>
           <tr>
             <th>Product</th>
             <th>Size</th>
-            <th>Qty</th>
             <th>Price</th>
-            <th>Remove</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+        </tbody>
       `;
+      const tbody = table.querySelector('tbody');
+      let grandTotal = 0;
 
-      let total = 0;
+      // Iterate over cart items and create table rows
+      for (const cartItemId in cart) {
+        const item = cart[cartItemId];
+        const subtotal = item.quantity * item.price;
+        grandTotal += subtotal;
 
-      keys.forEach(key => {
-        const quantity = cart[key];
-        const [productId, size] = key.split('__');
-        const product = productsData[productId];
-        if (!product) return;
-
-        const priceTotal = product.price * quantity;
-        total += priceTotal;
-
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="display:flex; align-items:center; gap:0.5rem;">
-            <img src="${product.image}" alt="${product.name}" />
-            <span>${product.name}</span>
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.size}</td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>
+            <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-cart-item-id="${cartItemId}">
           </td>
-          <td>${size}</td>
-          <td>${quantity}</td>
-          <td>$${priceTotal.toFixed(2)}</td>
-          <td><button aria-label="Remove ${product.name} size ${size}" data-key="${key}">Remove</button></td>
+          <td>$${subtotal.toFixed(2)}</td>
+          <td><button class="remove-item-button" data-cart-item-id="${cartItemId}">Remove</button></td>
         `;
-        const removeBtn = tr.querySelector('button');
-        removeBtn.addEventListener('click', () => {
-          removeFromCart(key);
-        });
-
-        table.querySelector('tbody').appendChild(tr);
-      });
+        tbody.appendChild(row);
+      }
 
       const totalEl = document.createElement('p');
-      totalEl.className = 'cart-total';
-      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+      totalEl.classList.add('cart-total');
+      totalEl.textContent = `Total: $${grandTotal.toFixed(2)}`;
 
       cartContainer.appendChild(table);
       cartContainer.appendChild(totalEl);
+
+      // Add event listeners to remove buttons
+      cartContainer.querySelectorAll('.remove-item-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+          const cartItemId = event.target.dataset.cartItemId;
+          removeFromCart(cartItemId);
+        });
+      });
+
+      // Add event listeners to quantity inputs
+      cartContainer.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', (event) => {
+          const cartItemId = event.target.dataset.cartItemId;
+          const newQuantity = parseInt(event.target.value);
+          updateQuantity(cartItemId, newQuantity);
+        });
+      });
+
+      updateHeaderCartCount(); // Ensure header count is updated after rendering
     }
 
-    function removeFromCart(key) {
-      delete cart[key];
-      renderCart();
+    // Function to remove an item from the cart
+    function removeFromCart(cartItemId) {
+      let cart = getCart();
+      delete cart[cartItemId]; // Remove the item using its unique cartItemId
+      saveCart(cart);
+      renderCart(); // Re-render the cart on this page
     }
 
+    // Function to update the quantity of an item in the cart
+    function updateQuantity(cartItemId, newQuantity) {
+        let cart = getCart();
+        if (cart[cartItemId]) {
+            if (newQuantity > 0) {
+                cart[cartItemId].quantity = newQuantity;
+            } else {
+                // If quantity is 0 or less, remove the item
+                delete cart[cartItemId];
+            }
+            saveCart(cart);
+            renderCart(); // Re-render the cart to reflect changes
+        }
+    }
+
+    // Function to update the cart count in the header navigation
+    function updateHeaderCartCount() {
+      const cart = getCart();
+      let totalQty = 0;
+      // Sum quantities of all items in the cart
+      for (const cartItemId in cart) {
+          totalQty += cart[cartItemId].quantity;
+      }
+      const cartCountEl = document.querySelector('header .cart-count');
+      if (cartCountEl) {
+        cartCountEl.textContent = totalQty;
+      }
+    }
+
+    // Event listener for the checkout button
     checkoutButton.addEventListener('click', () => {
-      alert('Checkout functionality is not available in this prototype.');
+      const cart = getCart();
+      if (Object.keys(cart).length > 0) {
+        // In a real application, this would redirect to a payment gateway
+        alert('Checkout functionality is a prototype. In a real application, this would proceed to a payment gateway. Your cart: ' + JSON.stringify(cart, null, 2));
+        // Optionally, clear the cart after a successful checkout simulation
+        // saveCart({});
+        // renderCart();
+      } else {
+        alert('Your cart is empty. Please add items before checking out.');
+      }
     });
 
+    // Initial Render of the cart when the page loads
     renderCart();
+
+    // Theme toggle logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Check for saved theme preference or system preference on load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      body.classList.add(savedTheme);
+      themeToggle.checked = (savedTheme === 'dark-theme');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      body.classList.add('dark-theme');
+      themeToggle.checked = true;
+    }
+
+    // Add event listener for theme toggle changes
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark-theme');
+      } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light-theme');
+      }
+    });
+
+    // Cookie Consent Banner logic
+    const cookieConsentBanner = document.getElementById('cookieConsentBanner');
+    const acceptCookieConsentButton = document.getElementById('acceptCookieConsent');
+
+    // Show banner if consent not yet accepted
+    if (localStorage.getItem('cookieConsentAccepted') !== 'true') {
+      cookieConsentBanner.style.display = 'block';
+    }
+
+    // Hide banner and set consent on accept button click
+    acceptCookieConsentButton.addEventListener('click', () => {
+      localStorage.setItem('cookieConsentAccepted', 'true');
+      cookieConsentBanner.style.display = 'none';
+    });
   </script>
 </body>
 </html>
+<!-- End of Cart.html -->

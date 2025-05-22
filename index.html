@@ -1,299 +1,309 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trendy Tees - Home</title>
+  <title>TeesHub - Home | Stylish T-Shirts for Every Occasion</title>
+  <meta name="description" content="Welcome to TeesHub - Your home for the latest and most stylish t-shirts. Discover unique designs, comfortable fits, and express your style." />
+  <meta name="keywords" content="t-shirts, TeesHub, home page, fashion, apparel, t-shirt shop, online store, custom tees" />
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script> <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-teeshub-domain.com/index.html">
+  <meta property="og:title" content="TeesHub - Home | Stylish T-Shirts for Every Occasion">
+  <meta property="og:description" content="Welcome to TeesHub - Your home for the latest and most stylish t-shirts. Discover unique designs and comfortable fits.">
+  <meta property="og:image" content="https://placehold.co/1200x630/A8DADC/457B9D?text=TeesHub+OG+Home">
+  <meta property="og:site_name" content="TeesHub">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://your-teeshub-domain.com/index.html">
+  <meta property="twitter:title" content="TeesHub - Home | Stylish T-Shirts for Every Occasion">
+  <meta property="twitter:description" content="Welcome to TeesHub - Your home for the latest and most stylish t-shirts. Discover unique designs and comfortable fits.">
+  <meta property="twitter:image" content="https://placehold.co/1200x600/A8DADC/457B9D?text=TeesHub+Twitter+Home">
+  <link rel="icon" type="image/x-icon" href="https://placehold.co/32x32/4CAF50/FFFFFF?text=TH">
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f9fafb;
-      color: #1f2937;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: #1f2937;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.1em;
-      user-select: none;
-      display: flex;
-      align-items: center;
-    }
-    .logo svg {
-      width: 32px;
-      height: 32px;
-      margin-right: 0.5rem;
-      fill: #3b82f6;
-    }
-    nav {
-      display: flex;
-      gap: 1.5rem;
-      font-weight: 600;
-      align-items: center;
-    }
-    nav a {
-      padding: 0.5rem 0.75rem;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-      color: white;
-      text-decoration: none;
-    }
-    nav a:hover {
-      background-color: #2563eb;
-    }
-    nav a.active {
-      background-color: #2563eb;
-      cursor: default;
-    }
-    /* Hero Section */
+    /* Custom styles can go here if needed, but prefer Tailwind classes */
     .hero {
-      background-image: url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1600&q=80');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      padding: 7rem 2rem 5rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      background: url('https://placehold.co/1500x600/A8DADC/1F2937?text=TeesHub+Hero+Banner') no-repeat center center/cover;
+      /* Tailwind classes can also be used for background images if preferred */
     }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: 0;
+    /* Ensure text is readable in both modes */
+    body {
+        @apply bg-base-100 text-base-content;
     }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
+    .dark body { /* This might be handled by DaisyUI themes directly */
+        @apply bg-gray-900 text-gray-100;
     }
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    .feature-item h3, .developer-section h2 {
+        @apply text-primary; /* DaisyUI primary color for accents */
     }
-    .hero p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 6px rgba(0,0,0,0.5);
-    }
-    .btn-shop {
-      background-color: #3b82f6;
-      color: white;
-      font-weight: 700;
-      font-size: 1.25rem;
-      padding: 0.75rem 2.5rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      user-select: none;
-      display: inline-block;
-    }
-    .btn-shop:hover, .btn-shop:focus {
-      background-color: #2563eb;
-      outline: none;
+    .dark .feature-item h3, .dark .developer-section h2 {
+        @apply text-primary; /* DaisyUI primary color for accents in dark mode */
     }
 
-    /* Testimonials Section */
-    .testimonials-section {
-      background: white;
-      padding: 3rem 2rem;
-      max-width: 900px;
-      margin: 0 auto 3rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .testimonials-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: #111827;
-    }
-    .testimonial {
-      font-style: italic;
-      font-size: 1.125rem;
-      color: #374151;
-      max-width: 700px;
-      margin: 0 auto 1rem;
-    }
-    .testimonial-author {
-      font-weight: 600;
-      margin-top: 0.5rem;
-      color: #2563eb;
-    }
+    /* Additional readability for specific elements */
+    .logo-text { @apply text-neutral-content; }
+    .dark .logo-text { @apply text-neutral-content; }
 
-    /* Newsletter Section */
-    .newsletter-section {
-      background: #3b82f6;
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      border-radius: 8px;
-      max-width: 700px;
-      margin: 0 auto 4rem;
-    }
-    .newsletter-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .newsletter-section p {
-      font-size: 1.125rem;
-      margin-bottom: 1.5rem;
-    }
-    .newsletter-form {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .newsletter-input {
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: none;
-      flex: 1 1 250px;
-      max-width: 400px;
-    }
-    .newsletter-submit {
-      background-color: #2563eb;
-      border: none;
-      color: white;
-      font-weight: 700;
-      padding: 0.75rem 2rem;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.25s ease;
-      user-select: none;
-    }
-    .newsletter-submit:hover, .newsletter-submit:focus {
-      background-color: #1e40af;
-      outline: none;
-    }
+    .nav-link { @apply text-neutral-content; }
+    .dark .nav-link { @apply text-neutral-content; }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1.5rem 1rem;
-      background-color: #1f2937;
-      color: white;
-      user-select: none;
-      margin-top: auto;
-    }
-    footer a {
-      color: #60a5fa;
-      text-decoration: none;
-      margin: 0 8px;
-      font-weight: 600;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1.125rem;
-      }
-    }
   </style>
 </head>
-<body>
-  <header>
-    <a href="/index.html" class="logo" aria-label="Go to home page">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18"/>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 21V9"/>
-      </svg>
-      TrendyTees
-    </a>
-    <nav aria-label="Primary navigation">
-      <a href="/index.html" class="active" aria-current="page">Home</a>
-      <a href="/shop.html">Products</a>
-      <a href="/cart.html" class="cart-link" aria-label="View shopping cart">
-        Cart
-        <span class="cart-count" aria-live="polite" aria-atomic="true" aria-relevant="additions">0</span>
-      </a>
-    </nav>
+<body class="font-sans">
+
+  <header class="bg-neutral text-neutral-content shadow-lg sticky top-0 z-50">
+    <div class="navbar container mx-auto">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <label tabindex="0" class="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+          </label>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base-content rounded-box w-52">
+            <li><a href="index.html" class="hover:text-primary">Home</a></li>
+            <li><a href="Shop.html" class="hover:text-primary">Shop</a></li>
+            <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count">0</span>)</a></li>
+            <li><a href="#contact-section" class="hover:text-primary">Contact</a></li>
+          </ul>
+        </div>
+        <a href="index.html" class="btn btn-ghost text-xl normal-case">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-2 text-primary">
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.47L18.42 7.74L12 11L5.58 7.74L12 4.47ZM4 9L11 12.5V20L4 16.5V9ZM13 20V12.5L20 9V16.5L13 20Z" />
+          </svg>
+          <span class="logo-text">TeesHub</span>
+        </a>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="index.html" class="nav-link hover:text-primary">Home</a></li>
+          <li><a href="Shop.html" class="nav-link hover:text-primary">Shop</a></li>
+          <li><a href="Cart.html" class="nav-link hover:text-primary">Cart (<span class="cart-count">0</span>)</a></li>
+          <li><a href="#contact-section" class="nav-link hover:text-primary">Contact</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <label class="swap swap-rotate btn btn-ghost">
+          <input type="checkbox" id="theme-toggle" class="theme-controller" value="dark" />
+          <svg class="swap-on fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29l.71-.71A1,1,0,0,0,7.76,5.64l-.71.71A1,1,0,0,0,5.64,7.05ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM20,12a1,1,0,0,0-1-1H18a1,1,0,0,0,0,2h1A1,1,0,0,0,20,12ZM17,5.64a1,1,0,0,0-.71-.29,1,1,0,0,0-.7.29l-.71.71a1,1,0,1,0,1.41,1.41l.71-.71A1,1,0,0,0,17,5.64ZM12,15a5,5,0,1,0,5-5A5,5,0,0,0,12,15Zm0,2a3,3,0,1,1,3-3A3,3,0,0,1,12,17Z"/></svg>
+          <svg class="swap-off fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>
+        </label>
+      </div>
+    </div>
   </header>
 
-  <section class="hero" role="banner" aria-label="Shop banner">
-    <div class="hero-content">
-      <h1>Find Your Perfect Tee</h1>
-      <p>Explore our exclusive collection of trendy T-shirts, crafted for comfort and style.</p>
-      <a href="/shop.html" class="btn-shop" role="button">Shop Now</a>
-    </div>
-  </section>
+  <main class="pt-4">
+    <section class="hero min-h-[60vh] flex flex-col justify-center items-center text-center text-neutral-content py-16 px-4">
+      <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Discover Your Style with TeesHub</h1>
+        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Explore our extensive collection of trendy t-shirts, designed for comfort and crafted for expression. Find your perfect tee today!</p>
+        <div class="space-x-4">
+            <a href="Shop.html" class="btn btn-primary btn-wide">Shop Now</a>
+            <a href="#developer-section" class="btn btn-outline btn-primary btn-wide">Meet the Developer</a>
+        </div>
+      </div>
+    </section>
 
-  <section class="testimonials-section" aria-labelledby="testimonials-heading">
-    <h2 id="testimonials-heading">What Our Customers Say</h2>
-    <blockquote class="testimonial">
-      "These tees fit perfectly and feel amazing. My go-to clothing now!" 
-      <div class="testimonial-author">— Sarah L.</div>
-    </blockquote>
-    <blockquote class="testimonial">
-      "Excellent quality and fast delivery. Highly recommend TrendyTees!"  
-      <div class="testimonial-author">— James K.</div>
-    </blockquote>
-  </section>
+    <section class="container mx-auto py-16 px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Why Choose TeesHub?</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="feature-item card bg-base-200 shadow-xl p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2">Unique Designs</h3>
+          <p class="text-sm">Stand out with our exclusive collection of original t-shirt designs. From minimalist to bold graphics, we have something for every taste.</p>
+        </div>
+        <div class="feature-item card bg-base-200 shadow-xl p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2">Premium Quality</h3>
+          <p class="text-sm">Experience ultimate comfort with our high-quality fabrics. Our tees are soft, durable, and designed to last.</p>
+        </div>
+        <div class="feature-item card bg-base-200 shadow-xl p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2">Sustainable Fashion</h3>
+          <p class="text-sm">Committed to ethical sourcing and sustainable practices. Look good, feel good, and do good for the planet.</p>
+        </div>
+        <div class="feature-item card bg-base-200 shadow-xl p-6 text-center hover:shadow-2xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2">Express Yourself</h3>
+          <p class="text-sm">Your style is your statement. Our diverse range allows you to truly express your personality and passions.</p>
+        </div>
+      </div>
+    </section>
 
-  <section class="newsletter-section" aria-labelledby="newsletter-heading">
-    <h2 id="newsletter-heading">Stay in the Loop</h2>
-    <p>Sign up for our newsletter to get the latest styles and exclusive offers.</p>
-    <form class="newsletter-form" onsubmit="handleNewsletterSignup(event)">
-      <label for="newsletter-email" class="sr-only">Email address</label>
-      <input type="email" id="newsletter-email" class="newsletter-input" placeholder="Enter your email" required />
-      <button type="submit" class="newsletter-submit">Subscribe</button>
-    </form>
-  </section>
+    <section class="bg-primary text-primary-content py-16 px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Find Your Next Favorite Tee?</h2>
+      <p class="text-lg mb-8">Browse our full collection and elevate your wardrobe with TeesHub.</p>
+      <a href="Shop.html" class="btn btn-accent btn-wide">View Collection</a>
+    </section>
 
-  <footer>
-    <a href="/about.html">About</a> |
-    <a href="/contact.html">Contact</a> |
-    <a href="/terms.html">Terms</a>
-    <p>&copy; 2024 TrendyTees. All rights reserved.</p>
+    <section id="developer-section" class="container mx-auto py-16 px-4">
+      <div class="developer-section card bg-base-200 shadow-xl p-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Meet the Developer</h2>
+        <img src="https://placehold.co/150x150/4CAF50/FFFFFF?text=Dev" alt="Developer's Photo" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-primary">
+        <p class="mb-4 max-w-xl mx-auto text-sm">
+          Hello! I'm a passionate web developer dedicated to creating engaging and user-friendly online experiences. This e-commerce site for TeesHub is a demonstration of modern web development practices.
+        </p>
+        <p class="mb-4 max-w-xl mx-auto text-sm">
+          My goal was to build a robust and scalable platform that not only showcases products beautifully but also provides a seamless shopping journey.
+        </p>
+        <p class="mb-6 max-w-xl mx-auto text-sm">
+          Thank you for visiting TeesHub. I hope you enjoy the experience!
+        </p>
+        <div class="flex justify-center space-x-4">
+          <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-primary btn-sm">GitHub</a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-primary btn-sm">LinkedIn</a>
+          <a href="mailto:your.email@example.com" class="btn btn-outline btn-primary btn-sm">Email Me</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact-section" class="container mx-auto py-16 px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
+        <div class="max-w-lg mx-auto bg-base-200 p-8 rounded-lg shadow-xl">
+            <form action="#" method="POST">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium mb-1">Full Name</label>
+                    <input type="text" name="name" id="name" class="input input-bordered w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
+                    <input type="email" name="email" id="email" class="input input-bordered w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                    <textarea name="message" id="message" rows="4" class="textarea textarea-bordered w-full" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+  </main>
+
+  <footer class="footer footer-center p-10 bg-neutral text-neutral-content">
+    <nav>
+      <div class="grid grid-flow-col gap-4">
+        <a href="index.html" class="link link-hover">Home</a>
+        <a href="Shop.html" class="link link-hover">Shop</a>
+        <a href="Cart.html" class="link link-hover">Cart</a>
+        <a href="#contact-section" class="link link-hover">Contact</a>
+        <a href="#privacy" class="link link-hover">Privacy Policy</a>
+      </div>
+    </nav>
+    <aside>
+      <p>&copy; <span id="currentYear"></span> TeesHub. All rights reserved.</p>
+       <p>Illustrative images from <a href="https://placehold.co" target="_blank" rel="noopener noreferrer" class="link link-hover">placehold.co</a></p>
+    </aside>
   </footer>
 
+  <div id="cookieConsentBanner" class="fixed bottom-0 left-0 right-0 bg-neutral text-neutral-content p-4 shadow-lg z-[100] hidden">
+    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+      <p class="text-sm mb-2 sm:mb-0">This website uses cookies to ensure you get the best experience. <a href="#privacy-policy" class="link link-hover text-primary">Learn more</a></p>
+      <button id="acceptCookieConsent" class="btn btn-primary btn-sm">Accept</button>
+    </div>
+  </div>
+
   <script>
-    // Newsletter signup handler (dummy)
-    function handleNewsletterSignup(event) {
-      event.preventDefault();
-      const emailInput = document.getElementById('newsletter-email');
-      if (emailInput.value) {
-        alert(`Thank you for subscribing, ${emailInput.value}!`);
-        emailInput.value = '';
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    // Function to set theme
+    function setTheme(theme) {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        themeToggle.checked = true;
+      } else {
+        themeToggle.checked = false;
       }
     }
+
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (prefersDark) {
+      setTheme('dark');
+    } else {
+      setTheme('light'); // Default to light if no preference
+    }
+
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+    });
+    
+    // Match system preference changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) { // Only if user hasn't manually set a theme
+            if (e.matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+    });
+
+
+    // Cookie Consent
+    const cookieConsentBanner = document.getElementById('cookieConsentBanner');
+    const acceptCookieConsentButton = document.getElementById('acceptCookieConsent');
+
+    if (localStorage.getItem('cookieConsentAccepted') !== 'true') {
+      cookieConsentBanner.classList.remove('hidden');
+    }
+
+    acceptCookieConsentButton.addEventListener('click', () => {
+      localStorage.setItem('cookieConsentAccepted', 'true');
+      cookieConsentBanner.classList.add('hidden');
+    });
+
+    // Update cart count in header (dummy function, needs actual cart logic)
+    function updateHeaderCartCount() {
+      const cartData = localStorage.getItem('teeshubCart');
+      let totalQty = 0;
+      if (cartData) {
+        try {
+            const cart = JSON.parse(cartData);
+            // Ensure cart is an object and items have quantity
+            if (typeof cart === 'object' && cart !== null) {
+                 totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
+            }
+        } catch (e) {
+            console.error("Error parsing cart data:", e);
+            // Optionally clear corrupted cart data
+            // localStorage.removeItem('teeshubCart');
+        }
+      }
+      const cartCountElements = document.querySelectorAll('.cart-count');
+      cartCountElements.forEach(el => {
+        if (el) {
+          el.textContent = totalQty;
+        }
+      });
+    }
+    updateHeaderCartCount(); // Call on page load
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
   </script>
 </body>
 </html>
