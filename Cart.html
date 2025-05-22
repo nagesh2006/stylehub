@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trendy Tees - Shopping Cart</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      margin-right: 0.5rem;
+      fill: #3b82f6;
+    }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      font-weight: 600;
+    }
+    nav a {
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      color: white;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #2563eb;
+    }
+    nav a.active {
+      background-color: #2563eb;
+      cursor: default;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .cart-empty {
+      text-align: center;
+      font-size: 1.25rem;
+      color: #6b7280;
+      margin-top: 3rem;
+    }
+
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    .cart-table th, .cart-table td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      vertical-align: middle;
+    }
+    .cart-table th {
+      color: #374151;
+      font-weight: 600;
+      background-color: #f3f4f6;
+    }
+    .cart-table td img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .cart-table td .product-name {
+      font-weight: 600;
+      color: #111827;
+    }
+    .cart-table td .product-size {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    .cart-table td .remove-button {
+      background-color: #ef4444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.25s ease;
+    }
+    .cart-table td .remove-button:hover {
+      background-color: #b91c1c;
+    }
+
+    .cart-total {
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-align: right;
+      margin-bottom: 2rem;
+      color: #111827;
+    }
+
+    .checkout-button {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto 3rem;
+      background-color: #3b82f6;
+      color: white;
+      font-weight: 700;
+      padding: 1rem 0;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.125rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .checkout-button:hover, .checkout-button:focus {
+      background-color: #2563eb;
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background-color: #1f2937;
+      color: white;
+      user-select: none;
+      margin-top: auto;
+    }
+    footer a {
+      color: #60a5fa;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: 600;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .cart-table td img {
+        width: 50px;
+        height: 50px;
+      }
+      .cart-total {
+        font-size: 1.25rem;
+      }
+      .checkout-button {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/index.html" class="logo" aria-label="Go to homepage">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 21V9"/>
+      </svg>
+      TrendyTees
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="/index.html">Home</a>
+      <a href="/shop.html">Products</a>
+      <a href="/cart.html" class="active" aria-current="page">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-container">
+      <!-- Cart content injected by JS -->
+    </div>
+    <button class="checkout-button" aria-label="Proceed to checkout" disabled>Checkout</button>
+  </main>
+
+  <footer>
+    <a href="/about.html">About</a> |
+    <a href="/contact.html">Contact</a> |
+    <a href="/terms.html">Terms</a>
+    <p>&copy; 2024 TrendyTees. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Example dummy data for cart items
+    // In practice, this data would come from localStorage or a backend
+    const productsData = {
+      tshirt1: { name: "Classic White Tee", price: 19.99, image: "https://images.unsplash.com/photo-1520975860686-788e73816aad?auto=format&fit=crop&w=400&q=80" },
+      tshirt2: { name: "Graphic Logo Tee", price: 24.99, image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" },
+      tshirt3: { name: "Vintage Band Tee", price: 29.99, image: "https://images.unsplash.com/photo-1530845647475-f53efe370073?auto=format&fit=crop&w=400&q=80" }
+    };
+
+    // Cart stored as { productId__size: quantity }
+    // For demo purposes initialize with some dummy items
+    let cart = {
+      "tshirt1__M": 2,
+      "tshirt2__L": 1
+    };
+
+    const cartContainer = document.getElementById('cart-container');
+    const checkoutButton = document.querySelector('.checkout-button');
+
+    function renderCart() {
+      cartContainer.innerHTML = '';
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        cartContainer.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+        checkoutButton.disabled = true;
+        return;
+      }
+      checkoutButton.disabled = false;
+
+      const table = document.createElement('table');
+      table.className = 'cart-table';
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      let total = 0;
+
+      keys.forEach(key => {
+        const quantity = cart[key];
+        const [productId, size] = key.split('__');
+        const product = productsData[productId];
+        if (!product) return;
+
+        const priceTotal = product.price * quantity;
+        total += priceTotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="display:flex; align-items:center; gap:0.5rem;">
+            <img src="${product.image}" alt="${product.name}" />
+            <span>${product.name}</span>
+          </td>
+          <td>${size}</td>
+          <td>${quantity}</td>
+          <td>$${priceTotal.toFixed(2)}</td>
+          <td><button aria-label="Remove ${product.name} size ${size}" data-key="${key}">Remove</button></td>
+        `;
+        const removeBtn = tr.querySelector('button');
+        removeBtn.addEventListener('click', () => {
+          removeFromCart(key);
+        });
+
+        table.querySelector('tbody').appendChild(tr);
+      });
+
+      const totalEl = document.createElement('p');
+      totalEl.className = 'cart-total';
+      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+
+      cartContainer.appendChild(table);
+      cartContainer.appendChild(totalEl);
+    }
+
+    function removeFromCart(key) {
+      delete cart[key];
+      renderCart();
+    }
+
+    checkoutButton.addEventListener('click', () => {
+      alert('Checkout functionality is not available in this prototype.');
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>

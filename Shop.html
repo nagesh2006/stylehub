@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trendy Tees Shop</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      margin-right: 0.5rem;
+      fill: #3b82f6;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      font-weight: 600;
+    }
+    nav a {
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #2563eb;
+      color: white;
+    }
+    nav a.active {
+      background-color: #2563eb;
+      color: white;
+      cursor: default;
+    }
+    .cart-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 50%;
+      padding: 0 6px;
+      min-width: 18px;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      user-select: none;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      margin: 0;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 0 2rem 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .product-card:hover {
+      box-shadow: 0 6px 14px rgb(0 0 0 / 0.15);
+    }
+    .product-image {
+      width: 100%;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      user-select: none;
+    }
+    .product-info {
+      padding: 1rem 1rem 1.25rem 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+      color: #111827;
+      user-select: text;
+    }
+    .product-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #3b82f6;
+      margin-bottom: 1rem;
+      user-select: text;
+    }
+    .add-to-cart-button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+    .add-to-cart-button:hover {
+      background-color: #2563eb;
+    }
+    .add-to-cart-button:active {
+      background-color: #1d4ed8;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 320px;
+      height: 100%;
+      background: white;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      transition: right 0.3s ease;
+      padding: 1rem;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-sidebar.open {
+      right: 0;
+    }
+    .cart-sidebar h2 {
+      margin-top: 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .cart-item button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .checkout-button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: auto;
+      width: 100%;
+      user-select: none;
+    }
+
+    /* Product Details Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1002;
+    }
+    .modal.open {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      user-select: text;
+    }
+    .modal img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+      max-height: 300px;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    select {
+      padding: 0.3rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      /* Make sure select is visible */
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background-color: #1f2937;
+      color: white;
+      user-select: none;
+    }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+      header {
+        padding: 1rem 1rem;
+      }
+      main {
+        padding: 0 1rem 2rem 1rem;
+      }
+      .cart-sidebar {
+        width: 100vw;
+        right: -100vw;
+      }
+      .cart-sidebar.open {
+        right: 0;
+      }
+    }
+
+    /* Accessibility: hide text but readable by screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/shop.html" class="logo" aria-label="Go to home page">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 21V9"/>
+      </svg>
+      TrendyTees
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="/index.html" >Home</a>
+      <a href="/shop.html" class="active" aria-current="page">Products</a>
+      <a class="cart-link" aria-label="View shopping cart" id="view-cart-button" tabindex="0" role="button">
+        Cart
+        <span class="cart-count" aria-live="polite" aria-atomic="true" aria-relevant="additions">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner" aria-label="Shop banner">
+    <h1>Trendy Tees for Everyone</h1>
+    <p>Fresh styles and top quality—choose your favorite!</p>
+  </section>
+
+  <main>
+    <section class="products-grid" aria-label="Product listing">
+      <!-- Product cards inserted by JavaScript -->
+    </section>
+  </main>
+
+  <div class="cart-sidebar" id="cart-sidebar" aria-label="Shopping cart" role="region" aria-live="polite">
+    <h2>Your Cart</h2>
+    <div id="cart-items" tabindex="0"></div>
+    <p id="total-amount">Total: $0.00</p>
+    <button class="checkout-button" type="button" aria-label="Checkout">Checkout</button>
+  </div>
+
+  <div class="modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" aria-describedby="modal-description">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Close modal">&times;</button>
+      <img id="modal-image" src="" alt="Product Image" />
+      <h2 id="modal-name"></h2>
+      <p id="modal-description"></p>
+      <label for="size-select">Select Size:</label>
+      <select id="size-select" aria-describedby="size-select-desc"></select>
+      <span id="size-select-desc" class="sr-only">Choose your preferred size for the product</span>
+      <button class="add-to-cart-button" id="modal-add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      <a href="/about.html">About</a> | 
+      <a href="/contact.html">Contact</a> | 
+      <a href="/terms.html">Terms</a>
+    </p>
+    &copy; 2024 TrendyTees. All rights reserved.
+  </footer>
+
+  <script>
+    // Dummy product data
+    const products = [
+      {
+        id: 'tshirt1',
+        name: "Classic White Tee",
+        price: 19.99,
+        image: "White.jfif",
+        description: "A classic white tee that goes with everything.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 'tshirt2',
+        name: "Graphic Logo Tee",
+        price: 24.99,
+        image: "Design.jpg",
+        description: "Show off your style with this graphic logo tee.",
+        sizes: ["S", "M", "L"]
+      },
+      {
+        id: 'tshirt3',
+        name: "Vintage Band Tee",
+        price: 29.99,
+        image: "Vintage.jfif",
+        description: "A vintage band tee for music lovers.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 'tshirt4',
+        name: "Striped Casual Tee",
+        price: 22.49,
+        image: "Striped.webp",
+        description: "A casual striped tee for everyday wear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 'tshirt5',
+        name: "Bold Color Tee",
+        price: 27.49,
+        image: "Bold.jpg",
+        description: "Make a statement with this bold color tee.",
+        sizes: ["S", "M", "L"]
+      },
+      {
+        id: 'tshirt6',
+        name: "Minimalist Tee",
+        price: 21.0,
+        image: "Mini.jpg",
+        description: "A minimalist tee for a clean look.",
+        sizes: ["M", "L"]
+      },
+      {
+        id: 'tshirt7',
+        name: "Pocket Tee",
+        price: 23.0,
+        image: "Pocket.jpeg",
+        description: "A casual pocket tee for a laid-back style.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 'tshirt8',
+        name: "Long Sleeve Tee",
+        price: 32.5,
+        image: "Long.jpg",
+        description: "Stay warm with this stylish long sleeve tee.",
+        sizes: ["M", "L", "XL"]
+      }
+    ];
+
+    const productsGrid = document.querySelector('.products-grid');
+    const cartCountEl = document.querySelector('.cart-count');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const viewCartButton = document.getElementById('view-cart-button');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalAmountEl = document.getElementById('total-amount');
+    const productModal = document.getElementById('product-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalName = document.getElementById('modal-name');
+    const modalDescription = document.getElementById('modal-description');
+    const sizeSelect = document.getElementById('size-select');
+    const modalAddToCart = document.getElementById('modal-add-to-cart');
+    const modalCloseBtn = productModal.querySelector('.close-modal');
+
+    // Cart stored as { productId__size: quantity }
+    const cart = {};
+
+    // Render product cards
+    function renderProducts() {
+      productsGrid.innerHTML = '';
+      products.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.setAttribute('tabindex', '0');
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="product-image" />
+          <div class="product-info">
+            <h2 class="product-name">${product.name}</h2>
+            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <button class="add-to-cart-button" aria-label="Add ${product.name} to cart">
+              Add to Cart
+            </button>
+          </div>
+        `;
+        card.addEventListener('click', () => showProductDetails(product));
+        const btn = card.querySelector('button.add-to-cart-button');
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation(); // Prevent triggering card click
+          addToCart(product.id, product.sizes[0] || '');
+        });
+        productsGrid.appendChild(card);
+      });
+    }
+
+    // Show product details modal
+    function showProductDetails(product) {
+      modalImage.src = product.image;
+      modalImage.alt = product.name;
+      modalName.textContent = product.name;
+      modalDescription.textContent = product.description;
+      sizeSelect.innerHTML = '';
+      product.sizes.forEach(size => {
+        const option = document.createElement('option');
+        option.value = size;
+        option.textContent = size;
+        sizeSelect.appendChild(option);
+      });
+      modalAddToCart.dataset.productId = product.id;
+      productModal.classList.add('open');
+      sizeSelect.focus();
+      trapFocus(productModal);
+    }
+
+    // Hide product details modal
+    function hideProductDetails() {
+      productModal.classList.remove('open');
+      releaseFocusTrap();
+    }
+
+    // Add to cart with productId and size
+    function addToCart(productId, size) {
+      const key = `${productId}__${size}`;
+      if (cart[key]) {
+        cart[key]++;
+      } else {
+        cart[key] = 1;
+      }
+      updateCartCount();
+      updateCartItems();
+      animateButton(productId);
+    }
+
+    // Update cart icon count
+    function updateCartCount() {
+      const totalQty = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+      cartCountEl.textContent = totalQty;
+    }
+
+    // Update cart sidebar items and total
+    function updateCartItems() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      for (const [key, qty] of Object.entries(cart)) {
+        const [id, size] = key.split('__');
+        const product = products.find(p => p.id === id);
+        if (!product) continue;
+        total += product.price * qty;
+
+        const item = document.createElement('div');
+        item.className = 'cart-item';
+        const sizeDisplay = size ? ` (Size: ${size})` : '';
+        item.innerHTML = `
+          <span>${product.name}${sizeDisplay} ×${qty}</span>
+          <button aria-label="Remove ${product.name}${sizeDisplay}" data-key="${key}">Remove</button>
+        `;
+        const removeBtn = item.querySelector('button');
+        removeBtn.addEventListener('click', () => removeFromCart(key));
+        cartItemsContainer.appendChild(item);
+      }
+      totalAmountEl.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    // Remove item from cart by key
+    function removeFromCart(key) {
+      delete cart[key];
+      updateCartCount();
+      updateCartItems();
+    }
+
+    // Animate add to cart button on product listing
+    function animateButton(productId) {
+      const productCard = [...productsGrid.children].find(card => {
+        const nameEl = card.querySelector('.product-name');
+        const product = products.find(p => p.name === nameEl.textContent);
+        return product && product.id === productId;
+      });
+      if (!productCard) return;
+      const button = productCard.querySelector('button.add-to-cart-button');
+      button.style.transform = 'scale(0.95)';
+      button.style.backgroundColor = '#2563eb';
+      setTimeout(() => {
+        button.style.transform = 'scale(1)';
+        button.style.backgroundColor = '';
+      }, 150);
+    }
+
+    // Toggle cart sidebar open/close
+    function toggleCartSidebar() {
+      cartSidebar.classList.toggle('open');
+    }
+
+    // Close modal and cart if clicking outside content (modal or cart sidebar)
+    window.addEventListener('click', (event) => {
+      if (productModal.classList.contains('open') && !event.target.closest('.modal-content')) {
+        hideProductDetails();
+      }
+    });
+
+    // Close modal on pressing Escape key
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        if (productModal.classList.contains('open')) {
+          hideProductDetails();
+        }
+        if (cartSidebar.classList.contains('open')) {
+          cartSidebar.classList.remove('open');
+        }
+      }
+    });
+
+    // Event listeners
+    document.getElementById('view-cart-button').addEventListener('click', () => {
+      toggleCartSidebar();
+    });
+
+    modalAddToCart.addEventListener('click', () => {
+      const productId = modalAddToCart.dataset.productId;
+      const size = sizeSelect.value;
+      addToCart(productId, size);
+      hideProductDetails();
+    });
+
+    modalCloseBtn.addEventListener('click', hideProductDetails);
+
+    // Focus trap for modal - accessibility improvement
+    let focusedElementBeforeModal;
+    function trapFocus(element) {
+      focusedElementBeforeModal = document.activeElement;
+      const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+      const focusableElements = element.querySelectorAll(focusableElementsString);
+      if (focusableElements.length === 0) return;
+
+      const firstTabStop = focusableElements[0];
+      const lastTabStop = focusableElements[focusableElements.length - 1];
+
+      element.addEventListener('keydown', trapKeyDown);
+
+      function trapKeyDown(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstTabStop) {
+              e.preventDefault();
+              lastTabStop.focus();
+            }
+          } else {
+            if (document.activeElement === lastTabStop) {
+              e.preventDefault();
+              firstTabStop.focus();
+            }
+          }
+        }
+      }
+
+      firstTabStop.focus();
+
+      element._trapKeyDownHandler = trapKeyDown;
+    }
+
+    function releaseFocusTrap() {
+      if (!productModal._trapKeyDownHandler) return;
+      productModal.removeEventListener('keydown', productModal._trapKeyDownHandler);
+      if (focusedElementBeforeModal) focusedElementBeforeModal.focus();
+    }
+
+    // Initial render
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
+
