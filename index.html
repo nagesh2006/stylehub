@@ -58,17 +58,23 @@
   <header class="bg-neutral text-neutral-content shadow-lg sticky top-0 z-50">
     <div class="navbar container mx-auto">
       <div class="navbar-start">
-        <div class="dropdown">
-          <label tabindex="0" class="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
-          </label>
-          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base-content rounded-box w-52">
-            <li><a href="index.html" class="hover:text-primary">Home</a></li>
-            <li><a href="Shop.html" class="hover:text-primary">Shop</a></li>
-            <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count">0</span>)</a></li>
-            <li><a href="#contact-section" class="hover:text-primary">Contact</a></li>
-          </ul>
-        </div>
+        <div class="dropdown dropdown-end">
+  <label tabindex="0" class="btn btn-ghost lg:hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </label>
+  <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base-content rounded-box w-52">
+    <li><a href="index.html" class="hover:text-primary">Home</a></li>
+    <li><a href="Shop.html" class="hover:text-primary">Shop</a></li>
+    <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count text-red-600 font-bold">0</span>)
+  </a>
+</li>
+
+    <li><a href="#contact-section" class="hover:text-primary">Contact</a></li>
+  </ul>
+</div>
+
         <a href="index.html" class="btn btn-ghost text-xl normal-case">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-2 text-primary">
             <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.47L18.42 7.74L12 11L5.58 7.74L12 4.47ZM4 9L11 12.5V20L4 16.5V9ZM13 20V12.5L20 9V16.5L13 20Z" />
@@ -78,7 +84,7 @@
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <li><a href="index.html" class="nav-link hover:text-primary">Home</a></li>
+          <li><a href="index.html" class="nav-link hover:textg-primary">Home</a></li>
           <li><a href="Shop.html" class="nav-link hover:text-primary">Shop</a></li>
           <li><a href="Cart.html" class="nav-link hover:text-primary">Cart (<span class="cart-count">0</span>)</a></li>
           <li><a href="#contact-section" class="nav-link hover:text-primary">Contact</a></li>
@@ -148,9 +154,9 @@
           Thank you for visiting TeesHub. I hope you enjoy the experience!
         </p>
         <div class="flex justify-center space-x-4">
-          <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-primary btn-sm">GitHub</a>
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-primary btn-sm">LinkedIn</a>
-          <a href="mailto:your.email@example.com" class="btn btn-outline btn-primary btn-sm">Email Me</a>
+          
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-primary btn-sm">Developer's Profile</a>
+          
         </div>
       </div>
     </section>
@@ -190,7 +196,7 @@
     </nav>
     <aside>
       <p>&copy; <span id="currentYear"></span> TeesHub. All rights reserved.</p>
-       <p>Illustrative images from <a href="https://placehold.co" target="_blank" rel="noopener noreferrer" class="link link-hover">placehold.co</a></p>
+       <p>Illustrative images from <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="link link-hover">placehold.co</a></p>
     </aside>
   </footer>
 
@@ -266,29 +272,76 @@
 
     // Update cart count in header (dummy function, needs actual cart logic)
     function updateHeaderCartCount() {
-      const cartData = localStorage.getItem('teeshubCart');
-      let totalQty = 0;
-      if (cartData) {
-        try {
-            const cart = JSON.parse(cartData);
-            // Ensure cart is an object and items have quantity
-            if (typeof cart === 'object' && cart !== null) {
-                 totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
-            }
-        } catch (e) {
-            console.error("Error parsing cart data:", e);
-            // Optionally clear corrupted cart data
-            // localStorage.removeItem('teeshubCart');
+    const cartData = localStorage.getItem('teeshubCart');
+    let totalQty = 0;
+
+    if (cartData) {
+      try {
+        const cart = JSON.parse(cartData);
+        if (typeof cart === 'object' && cart !== null) {
+          totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
         }
+      } catch (e) {
+        console.error("Error parsing cart data:", e);
       }
-      const cartCountElements = document.querySelectorAll('.cart-count');
-      cartCountElements.forEach(el => {
-        if (el) {
-          el.textContent = totalQty;
-        }
-      });
     }
-    updateHeaderCartCount(); // Call on page load
+
+    const cartCountElements = document.querySelectorAll('.cart-count');
+    cartCountElements.forEach(el => {
+      el.textContent = totalQty;
+      el.classList.add('text-red-600', 'font-bold'); // Make it red and bold
+    });
+  }
+
+  // Function to add item to the cart and save it in localStorage
+  function addToCart(productId, productData) {
+    const cartData = localStorage.getItem('teeshubCart');
+    let cart = {};
+
+    if (cartData) {
+      try {
+        cart = JSON.parse(cartData);
+      } catch (e) {
+        console.error("Invalid cart data in localStorage:", e);
+      }
+    }
+
+    // If item exists, increase quantity, otherwise add it
+    if (cart[productId]) {
+      cart[productId].quantity += 1;
+    } else {
+      cart[productId] = {
+        ...productData,
+        quantity: 1
+      };
+    }
+
+    // Save back to localStorage
+    localStorage.setItem('teeshubCart', JSON.stringify(cart));
+    updateHeaderCartCount();
+  }
+
+  // Call this on page load to sync cart count
+  document.addEventListener('DOMContentLoaded', () => {
+    updateHeaderCartCount();
+
+    // Example hook: handle Add to Cart button clicks
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const productId = button.dataset.productId;
+        const productName = button.dataset.productName;
+        const productPrice = parseFloat(button.dataset.productPrice);
+
+        // Optional: add more product data as needed
+        const productData = {
+          name: productName,
+          price: productPrice
+        };
+
+        addToCart(productId, productData);
+      });
+    });
+  });
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

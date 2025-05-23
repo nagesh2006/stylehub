@@ -1,604 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TeesHub - Shopping Cart</title>
-  <meta name="description" content="Review your shopping cart and proceed to checkout at TeesHub. Manage your selected t-shirts, sizes, and quantities before finalizing your order." />
-  <meta name="keywords" content="shopping cart, checkout, TeesHub, order, t-shirts, review order" />
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://your-teeshub-domain.com/cart.html">
-  <meta property="og:title" content="TeesHub - Shopping Cart">
-  <meta property="og:description" content="Review your shopping cart and proceed to checkout at TeesHub.">
-  <meta property="og:image" content="https://your-teeshub-domain.com/images/og-cart.jpg"> <meta property="og:site_name" content="TeesHub">
-
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://your-teeshub-domain.com/cart.html">
-  <meta property="twitter:title" content="TeesHub - Shopping Cart">
-  <meta property="twitter:description" content="Review your shopping cart and proceed to checkout at TeesHub.">
-  <meta property="twitter:image" content="https://your-teeshub-domain.com/images/og-cart.jpg">
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-
-
-  <style>
-    :root {
-      /* Light theme (grey-green) */
-      --primary-bg: #f5f5f5;
-      --secondary-bg: #e0e0e0;
-      --primary-text: #333;
-      --secondary-text: #555;
-      --accent-color: #4CAF50;
-      --header-bg: #ffffff;
-      --footer-bg: #333;
-      --footer-text: #f0f0f0;
-      --button-bg: #4CAF50;
-      --button-text: #ffffff;
-      --border-color: #ddd;
-      --input-bg: #ffffff;
-      --input-border: #ccc;
-    }
-
-    body.dark-theme {
-      /* Dark theme (black-blue) */
-      --primary-bg: #1a1a1a;
-      --secondary-bg: #333333;
-      --primary-text: #f0f0f0;
-      --secondary-text: #cccccc;
-      --accent-color: #2196F3;
-      --header-bg: #222222;
-      --footer-bg: #111;
-      --footer-text: #cccccc;
-      --button-bg: #2196F3;
-      --button-text: #ffffff;
-      --border-color: #444;
-      --input-bg: #2a2a2a;
-      --input-border: #555;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--primary-bg);
-      color: var(--primary-text);
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    header {
-      background-color: var(--header-bg);
-      color: var(--primary-text);
-      padding: 1em 2em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: var(--primary-text);
-      text-decoration: none;
-    }
-
-    .logo svg {
-      height: 30px;
-      width: 30px;
-      margin-right: 10px;
-      fill: var(--accent-color);
-      transition: fill 0.3s;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-
-    nav ul li {
-      margin-left: 20px;
-    }
-
-    nav ul li a {
-      color: var(--primary-text);
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: var(--accent-color);
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 2em auto;
-      padding: 0 20px;
-    }
-
-    .cart-header {
-      text-align: center;
-      margin-bottom: 2em;
-    }
-
-    .cart-header h1 {
-      font-size: 2.5em;
-      color: var(--primary-text);
-    }
-
-    #cart-items-container {
-      background-color: var(--secondary-bg);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s;
-    }
-
-    #cart-items-container table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-
-    #cart-items-container th,
-    #cart-items-container td {
-      text-align: left;
-      padding: 12px;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--primary-text);
-      transition: border-color 0.3s, color 0.3s;
-    }
-
-    #cart-items-container th {
-      background-color: var(--accent-color);
-      color: white;
-      font-weight: bold;
-    }
-
-    #cart-items-container .remove-item-button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.8em;
-      transition: background-color 0.3s;
-    }
-
-    #cart-items-container .remove-item-button:hover {
-      background-color: #d32f2f;
-    }
-
-    .cart-total {
-      text-align: right;
-      font-size: 1.5em;
-      font-weight: bold;
-      color: var(--accent-color);
-      margin-top: 20px;
-    }
-
-    .checkout-button {
-      display: block;
-      width: fit-content;
-      margin: 30px auto 0 auto;
-      background-color: var(--accent-color);
-      color: white;
-      padding: 15px 30px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1.2em;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s;
-    }
-
-    .checkout-button:hover {
-      background-color: var(--button-bg);
-    }
-
-    .empty-cart-message {
-      text-align: center;
-      padding: 50px;
-      color: var(--secondary-text);
-      font-size: 1.1em;
-    }
-
-    footer {
-      background-color: var(--footer-bg);
-      color: var(--footer-text);
-      padding: 2em;
-      text-align: center;
-      margin-top: 4em;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    footer p {
-      margin: 0.5em 0;
-    }
-
-    footer nav ul {
-      justify-content: center;
-      margin-bottom: 1em;
-    }
-
-    footer nav ul li a {
-      color: var(--footer-text);
-    }
-
-    .cookie-consent-banner {
-      display: none; /* Hidden by default */
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: var(--secondary-bg);
-      color: var(--primary-text);
-      padding: 15px 20px;
-      text-align: center;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      border-top: 1px solid var(--border-color);
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-
-    .cookie-consent-banner p {
-      margin: 0 0 10px 0;
-      font-size: 0.9em;
-    }
-
-    .cookie-consent-banner button {
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: background-color 0.3s;
-    }
-
-    .cookie-consent-banner button:hover {
-      background-color: var(--button-bg);
-    }
-
-    .cookie-consent-banner a {
-      color: var(--accent-color);
-      text-decoration: none;
-      margin-left: 5px;
-    }
-
-    .cookie-consent-banner a:hover {
-      text-decoration: underline;
-    }
-
-    .theme-toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-      margin-left: 20px;
-    }
-
-    .theme-toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-      border-radius: 34px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: var(--accent-color);
-    }
-
-    input:focus + .slider {
-      box-shadow: 0 0 1px var(--accent-color);
-    }
-
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      nav ul {
-        margin-top: 1em;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      nav ul li {
-        margin: 10px 0;
-      }
-
-      .cart-header h1 {
-        font-size: 2em;
-      }
-    }
-  </style>
+  <title>TeesHub Cart | Your Shopping Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.47L18.42 7.74L12 11L5.58 7.74L12 4.47ZM4 9L11 12.5V20L4 16.5V9ZM13 20V12.5L20 9V16.5L13 20Z" />
-      </svg>
-      TeesHub
-    </a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="Shop.html">Shop</a></li>
-        <li><a href="Cart.html">Cart (<span class="cart-count">0</span>)</a></li>
-        <li><a href="#contact">Contact</a></li>
+<body class="bg-base-200 text-base-content font-sans">
+
+<header class="bg-neutral text-neutral-content shadow-lg sticky top-0 z-50">
+  <div class="navbar container mx-auto">
+    <div class="navbar-start">
+      <a href="index.html" class="btn btn-ghost text-xl normal-case">
+        <span class="text-primary">TeesHub</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="index.html" class="hover:text-primary">Home</a></li>
+        <li><a href="Shop.html" class="hover:text-primary">Shop</a></li>
+        <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count text-red-600 font-bold">0</span>)</a></li>
       </ul>
-    </nav>
-    <label class="theme-toggle-switch">
-      <input type="checkbox" id="theme-toggle">
-      <span class="slider"></span>
-    </label>
-  </header>
-
-  <main>
-    <section class="container">
-      <div class="cart-header">
-        <h1>Your Shopping Cart</h1>
-      </div>
-
-      <div id="cart-items-container">
-        <p class="empty-cart-message">Your cart is empty. Start shopping now!</p>
-      </div>
-
-      <button id="checkoutButton" class="checkout-button">Proceed to Checkout</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; <span id="currentYear"></span> TeesHub. All rights reserved.</p>
-    <nav>
-      <ul>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Sitemap</a></li>
-      </ul>
-    </nav>
-  </footer>
-
-  <div id="cookieConsentBanner" class="cookie-consent-banner">
-    <p>This website uses cookies to ensure you get the best experience on our website. By clicking "Accept", you agree to our use of cookies. <a href="#privacy-policy">Learn more</a></p>
-    <button id="acceptCookieConsent">Accept</button>
+    </div>
+    <div class="navbar-end">
+      <label class="swap swap-rotate btn btn-ghost">
+        <input type="checkbox" id="theme-toggle" class="theme-controller" />
+        <svg class="swap-on fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M5.64 17l-.71.71a1 1 0 001.41 1.41l.71-.71a1 1 0 00-1.41-1.41zM12 5a1 1 0 000-2 1 1 0 000 2zm7 7a1 1 0 100-2 1 1 0 000 2zm-7 7a1 1 0 000 2 1 1 0 000-2zM4 12a1 1 0 102 0 1 1 0 00-2 0zm15.36-5.36a1 1 0 00-1.41 0l-.71.71a1 1 0 101.41 1.41l.71-.71a1 1 0 000-1.41zM17.66 17.66a1 1 0 00-1.41 0l-.71.71a1 1 0 001.41 1.41l.71-.71a1 1 0 000-1.41zM6.34 6.34a1 1 0 000 1.41l.71.71a1 1 0 101.41-1.41l-.71-.71a1 1 0 00-1.41 0z"/>
+        </svg>
+        <svg class="swap-off fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 3a9 9 0 018.94 10.39 7 7 0 11-9.33-9.33A9 9 0 0112 3z"/>
+        </svg>
+      </label>
+    </div>
   </div>
+</header>
 
-  <script>
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
+<main class="container mx-auto py-10 px-4">
+  <h1 class="text-3xl font-bold mb-6 text-center">Your Shopping Cart</h1>
+  <div id="cart-items" class="space-y-4"></div>
 
-    const checkoutButton = document.getElementById('checkoutButton');
-    const cartContainer = document.getElementById('cart-items-container');
+  <div id="customer-form" class="mt-8 bg-base-100 p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Customer Details</h2>
+    <div class="mb-4">
+      <label class="block mb-1">Full Name</label>
+      <input type="text" id="custName" class="input input-bordered w-full" required />
+    </div>
+    <div class="mb-4">
+      <label class="block mb-1">Email</label>
+      <input type="email" id="custEmail" class="input input-bordered w-full" required />
+    </div>
+    <div class="mb-4">
+      <label class="block mb-1">Address</label>
+      <textarea id="custAddress" class="textarea textarea-bordered w-full" rows="3" required></textarea>
+    </div>
+    <button id="checkoutButton" class="btn btn-primary w-full">Place Order</button>
+  </div>
+</main>
 
-    // Function to retrieve cart data from local storage
-    function getCart() {
-      // The cart is now stored with a key 'cart' and items include size
-      const cartData = localStorage.getItem('cart');
-      return cartData ? JSON.parse(cartData) : {};
+<footer class="footer footer-center p-10 bg-neutral text-neutral-content mt-16">
+  <aside>
+    <p>&copy; <span id="currentYear"></span> TeesHub. All rights reserved.</p>
+  </aside>
+</footer>
+
+<script>
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+  const themeToggle = document.getElementById('theme-toggle');
+  const htmlEl = document.documentElement;
+  themeToggle.addEventListener('change', () => {
+    htmlEl.setAttribute('data-theme', themeToggle.checked ? 'dark' : 'light');
+    localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+  });
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  htmlEl.setAttribute('data-theme', savedTheme);
+  themeToggle.checked = savedTheme === 'dark';
+
+  function getCart() {
+    const cartData = localStorage.getItem('teeshubCart');
+    return cartData ? JSON.parse(cartData) : {};
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem('teeshubCart', JSON.stringify(cart));
+    updateHeaderCartCount();
+  }
+
+  function updateHeaderCartCount() {
+    const cart = getCart();
+    let totalQty = 0;
+    if (typeof cart === 'object') {
+      totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
+    }
+    document.querySelectorAll('.cart-count').forEach(el => {
+      el.textContent = totalQty;
+      el.classList.add('text-red-600', 'font-bold');
+    });
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = '';
+
+    if (Object.keys(cart).length === 0) {
+      cartItemsContainer.innerHTML = '<p class="text-center text-base-content/60">Your cart is empty.</p>';
+      return;
     }
 
-    // Function to save cart data to local storage
-    function saveCart(cart) {
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateHeaderCartCount(); // Update cart count in header after saving
-    }
+    for (const [productId, item] of Object.entries(cart)) {
+      const card = document.createElement('div');
+      card.className = 'card bg-base-100 shadow p-4';
 
-    // Function to render cart items on the page
-    function renderCart() {
-      const cart = getCart();
-      cartContainer.innerHTML = ''; // Clear previous content
-
-      // If cart is empty, display message and hide checkout button
-      if (Object.keys(cart).length === 0) {
-        cartContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty. Start shopping now!</p>';
-        checkoutButton.style.display = 'none';
-        updateHeaderCartCount();
-        return;
-      }
-
-      checkoutButton.style.display = 'block'; // Show checkout button if cart has items
-
-      const table = document.createElement('table');
-      table.innerHTML = `
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Size</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
+      card.innerHTML = `
+        <div class="flex justify-between items-center gap-4 flex-wrap">
+          <div class="flex-grow">
+            <h3 class="text-lg font-semibold">${item.name}</h3>
+            <p class="text-sm text-base-content/70">Price: $${item.price.toFixed(2)}</p>
+            <p class="text-sm text-base-content/70">Quantity: ${item.quantity}</p>
+            <label class="text-sm text-base-content/80 block mt-2">
+              Size:
+              <select data-product-id="${productId}" class="select select-sm select-bordered size-selector mt-1">
+                <option value="S"${item.size === 'S' ? ' selected' : ''}>S</option>
+                <option value="M"${item.size === 'M' ? ' selected' : ''}>M</option>
+                <option value="L"${item.size === 'L' ? ' selected' : ''}>L</option>
+                <option value="XL"${item.size === 'XL' ? ' selected' : ''}>XL</option>
+              </select>
+            </label>
+          </div>
+          <button class="btn btn-error btn-sm remove-btn" data-product-id="${productId}">Remove</button>
+        </div>
       `;
-      const tbody = table.querySelector('tbody');
-      let grandTotal = 0;
 
-      // Iterate over cart items and create table rows
-      for (const cartItemId in cart) {
-        const item = cart[cartItemId];
-        const subtotal = item.quantity * item.price;
-        grandTotal += subtotal;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.name}</td>
-          <td>${item.size}</td>
-          <td>$${item.price.toFixed(2)}</td>
-          <td>
-            <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-cart-item-id="${cartItemId}">
-          </td>
-          <td>$${subtotal.toFixed(2)}</td>
-          <td><button class="remove-item-button" data-cart-item-id="${cartItemId}">Remove</button></td>
-        `;
-        tbody.appendChild(row);
-      }
-
-      const totalEl = document.createElement('p');
-      totalEl.classList.add('cart-total');
-      totalEl.textContent = `Total: $${grandTotal.toFixed(2)}`;
-
-      cartContainer.appendChild(table);
-      cartContainer.appendChild(totalEl);
-
-      // Add event listeners to remove buttons
-      cartContainer.querySelectorAll('.remove-item-button').forEach(button => {
-        button.addEventListener('click', (event) => {
-          const cartItemId = event.target.dataset.cartItemId;
-          removeFromCart(cartItemId);
-        });
-      });
-
-      // Add event listeners to quantity inputs
-      cartContainer.querySelectorAll('.quantity-input').forEach(input => {
-        input.addEventListener('change', (event) => {
-          const cartItemId = event.target.dataset.cartItemId;
-          const newQuantity = parseInt(event.target.value);
-          updateQuantity(cartItemId, newQuantity);
-        });
-      });
-
-      updateHeaderCartCount(); // Ensure header count is updated after rendering
+      cartItemsContainer.appendChild(card);
     }
 
-    // Function to remove an item from the cart
-    function removeFromCart(cartItemId) {
-      let cart = getCart();
-      delete cart[cartItemId]; // Remove the item using its unique cartItemId
-      saveCart(cart);
-      renderCart(); // Re-render the cart on this page
-    }
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.productId;
+        const cart = getCart();
+        delete cart[id];
+        saveCart(cart);
+        renderCart();
+      });
+    });
 
-    // Function to update the quantity of an item in the cart
-    function updateQuantity(cartItemId, newQuantity) {
-        let cart = getCart();
-        if (cart[cartItemId]) {
-            if (newQuantity > 0) {
-                cart[cartItemId].quantity = newQuantity;
-            } else {
-                // If quantity is 0 or less, remove the item
-                delete cart[cartItemId];
-            }
-            saveCart(cart);
-            renderCart(); // Re-render the cart to reflect changes
+    document.querySelectorAll('.size-selector').forEach(select => {
+      select.addEventListener('change', () => {
+        const id = select.dataset.productId;
+        const newSize = select.value;
+        const cart = getCart();
+        if (cart[id]) {
+          cart[id].size = newSize;
+          saveCart(cart);
         }
-    }
-
-    // Function to update the cart count in the header navigation
-    function updateHeaderCartCount() {
-      const cart = getCart();
-      let totalQty = 0;
-      // Sum quantities of all items in the cart
-      for (const cartItemId in cart) {
-          totalQty += cart[cartItemId].quantity;
-      }
-      const cartCountEl = document.querySelector('header .cart-count');
-      if (cartCountEl) {
-        cartCountEl.textContent = totalQty;
-      }
-    }
-
-    // Event listener for the checkout button
-    checkoutButton.addEventListener('click', () => {
-      const cart = getCart();
-      if (Object.keys(cart).length > 0) {
-        // In a real application, this would redirect to a payment gateway
-        alert('Checkout functionality is a prototype. In a real application, this would proceed to a payment gateway. Your cart: ' + JSON.stringify(cart, null, 2));
-        // Optionally, clear the cart after a successful checkout simulation
-        // saveCart({});
-        // renderCart();
-      } else {
-        alert('Your cart is empty. Please add items before checking out.');
-      }
+      });
     });
+  }
 
-    // Initial Render of the cart when the page loads
+  document.getElementById('checkoutButton').addEventListener('click', () => {
+    const name = document.getElementById('custName').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+
+    if (!name || !email || !address) {
+      alert('Please fill in all customer details before placing the order.');
+      return;
+    }
+
+    const cart = getCart();
+    if (Object.keys(cart).length > 0) {
+      alert('Order placed successfully!\nThank you, ' + name + '!');
+      saveCart({});
+      renderCart();
+    } else {
+      alert('Your cart is empty. Please add items before checking out.');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
     renderCart();
+    updateHeaderCartCount();
+  });
+</script>
 
-    // Theme toggle logic
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-
-    // Check for saved theme preference or system preference on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      body.classList.add(savedTheme);
-      themeToggle.checked = (savedTheme === 'dark-theme');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      body.classList.add('dark-theme');
-      themeToggle.checked = true;
-    }
-
-    // Add event listener for theme toggle changes
-    themeToggle.addEventListener('change', () => {
-      if (themeToggle.checked) {
-        body.classList.add('dark-theme');
-        localStorage.setItem('theme', 'dark-theme');
-      } else {
-        body.classList.remove('dark-theme');
-        localStorage.setItem('theme', 'light-theme');
-      }
-    });
-
-    // Cookie Consent Banner logic
-    const cookieConsentBanner = document.getElementById('cookieConsentBanner');
-    const acceptCookieConsentButton = document.getElementById('acceptCookieConsent');
-
-    // Show banner if consent not yet accepted
-    if (localStorage.getItem('cookieConsentAccepted') !== 'true') {
-      cookieConsentBanner.style.display = 'block';
-    }
-
-    // Hide banner and set consent on accept button click
-    acceptCookieConsentButton.addEventListener('click', () => {
-      localStorage.setItem('cookieConsentAccepted', 'true');
-      cookieConsentBanner.style.display = 'none';
-    });
-  </script>
 </body>
 </html>
-<!-- End of Cart.html -->

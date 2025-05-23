@@ -54,7 +54,7 @@
           <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base-content rounded-box w-52">
             <li><a href="index.html" class="hover:text-primary">Home</a></li>
             <li><a href="Shop.html" class="hover:text-primary">Shop</a></li>
-            <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count">0</span>)</a></li>
+            <li><a href="Cart.html" class="hover:text-primary">Cart (<span class="cart-count text-red-600 font-bold">0</span>)</a></li>
             <li><a href="index.html#contact-section" class="hover:text-primary">Contact</a></li>
           </ul>
         </div>
@@ -323,45 +323,66 @@
     }
 
 
-    function addToCart(productId, price) {
-      const cart = getCart();
-      const product = productData.find(p => p.id === productId) || { name: 'Selected Tee', price: price }; // Fallback name
+    function addToCart(productId) {
+  const cartData = localStorage.getItem('teeshubCart');
+  let cart = cartData ? JSON.parse(cartData) : {};
 
+  const product = productData.find(p => p.id === productId);
+  if (!product) return;
+
+  if (cart[productId]) {
+    cart[productId].quantity += 1;
+  } else {
+    cart[productId] = {
+      ...product,
+      quantity: 1
+    };
+  }
+
+  localStorage.setItem('teeshubCart', JSON.stringify(cart));
+  updateHeaderCartCount();
+  showToast(`${product.name} added to cart!`);
+}
+    function removeFromCart(productId) {
+      const cart = getCart();
       if (cart[productId]) {
-        cart[productId].quantity++;
-      } else {
-        cart[productId] = { quantity: 1, price: parseFloat(price), name: product.name }; // Store name and price
+          delete cart[productId];
+          saveCart(cart);
       }
-      saveCart(cart);
-      showToast(`${product.name} added to cart!`);
     }
 
-    function updateHeaderCartCount() {
-      const cart = getCart();
-      let totalQty = 0;
-      if (typeof cart === 'object' && cart !== null) {
-          totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
-      }
-      const cartCountElements = document.querySelectorAll('.cart-count');
-      cartCountElements.forEach(el => {
-        if (el) {
-          el.textContent = totalQty;
-        }
-      });
-    }
+   function updateHeaderCartCount() {
+  const cart = getCart(); // gets 'teeshubCart' from localStorage
+  let totalQty = 0;
+
+  if (typeof cart === 'object' && cart !== null) {
+    totalQty = Object.values(cart).reduce((sum, item) => sum + (item.quantity || 0), 0);
+  }
+
+  const cartCountElements = document.querySelectorAll('.cart-count');
+  cartCountElements.forEach(el => {
+    el.textContent = totalQty;
+    el.classList.add('text-red-600', 'font-bold'); // 🔴 makes the count red and bold
+  });
+}
+
 
     // Attach event listeners to "Add to Cart" buttons
     document.addEventListener('DOMContentLoaded', () => {
-      const addButtons = document.querySelectorAll('.products-grid .btn[data-product-id]');
-      addButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const productId = button.dataset.productId;
-          const productPrice = parseFloat(button.dataset.productPrice);
-          addToCart(productId, productPrice);
-        });
-      });
-      updateHeaderCartCount(); // Initial cart count update
+  const addButtons = document.querySelectorAll('#products-grid .btn[data-product-id]');
+  addButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      addToCart(productId); // Uses pre-defined productData
     });
+  });
+  updateHeaderCartCount(); // Initial update on load
+});
+
+    const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('change', () => {
+    document.documentElement.setAttribute('data-theme', toggle.checked ? 'dark' : 'light');
+  });
 
   </script>
 </body>
